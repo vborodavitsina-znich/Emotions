@@ -1,0 +1,349 @@
+<!DOCTYPE html><html lang="ru"><head><meta name="x-poe-datastore-behavior" content="local_only"><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Карта эмоций — 118 состояний по интенсивности</title>
+<style>
+  :root{
+    --bg:#0b1020; --card:#121936; --muted:#8ea0c7; --text:#e7ecf7;
+    --joy:#3ddc97; --sad:#7aa2f7; --fear:#f6c177; --anger:#ef596f; --disgust:#74c7a5; --surprise:#f4d35e;
+    --chip:#1a2348; --chip-hover:#223062; --pill:#0e1633; --accent:#9bdbff;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:linear-gradient(180deg,#0b1020 0%,#0e1836 100%);color:var(--text);font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif}
+  header{padding:20px 16px 10px;position:sticky;top:0;background:linear-gradient(180deg, rgba(11,16,32,.95), rgba(11,16,32,.70));backdrop-filter: blur(6px);z-index:10;border-bottom:1px solid rgba(255,255,255,.06)}
+  h1{margin:0 0 6px;font-size:20px;letter-spacing:.2px}
+  .sub{color:var(--muted);font-size:13px;margin-bottom:10px}
+  .controls{display:grid;gap:8px;grid-template-columns:1fr;max-width:1200px;margin:0 auto}
+  @media(min-width:700px){.controls{grid-template-columns: 1.2fr .9fr .9fr}}
+  input[type="search"],select{
+    background:var(--card);border:1px solid rgba(255,255,255,.1);color:var(--text);
+    padding:10px 12px;border-radius:10px;outline:none;font-size:14px;width:100%
+  }
+  input::placeholder{color:#a8b3cf}
+  main{max-width:1200px;margin:16px auto;padding:0 16px 32px}
+  .legend{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+  .legend .item{display:flex;align-items:center;gap:8px;background:var(--pill);padding:8px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.06);font-size:12px;color:var(--muted)}
+  .sw{width:12px;height:12px;border-radius:3px}
+  .grid{display:grid;gap:14px}
+  @media(min-width:800px){.grid{grid-template-columns: repeat(2, minmax(0,1fr))}}
+  @media(min-width:1100px){.grid{grid-template-columns: repeat(3, minmax(0,1fr))}}
+  .lane{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:14px;overflow:hidden}
+  .lane h2{margin:0;padding:12px 14px;font-size:16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,.06)}
+  .lane h2 .dot{width:10px;height:10px;border-radius:50%}
+  .levels{display:grid;grid-template-columns:repeat(4, 1fr);gap:10px;padding:12px}
+  .col{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.05);border-radius:12px;padding:10px;display:flex;flex-direction:column;min-height:180px}
+  .col h3{margin:2px 2px 8px;font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.6px}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{
+    background:var(--chip);border:1px solid rgba(255,255,255,.06);color:var(--text);
+    padding:7px 9px;border-radius:999px;font-size:13px;cursor:pointer;transition:.15s ease;
+  }
+  .chip:hover{background:var(--chip-hover);transform:translateY(-1px)}
+  .muted{opacity:.6}
+  .footer{color:var(--muted);font-size:12px;margin-top:18px;line-height:1.55}
+  .count{color:var(--accent);font-weight:600}
+  dialog{
+    width:min(680px, calc(100% - 32px));border:1px solid rgba(255,255,255,.2);border-radius:14px;padding:0;background:#0c1430;color:var(--text);
+    box-shadow:0 20px 60px rgba(0,0,0,.5)
+  }
+  dialog::backdrop{background:rgba(3,6,16,.6);backdrop-filter: blur(2px)}
+  .md{padding:16px}
+  .md h4{margin:0 0 6px;font-size:16px}
+  .md p{margin:0 0 8px;color:#c7d0ea;font-size:14px}
+  .badge{display:inline-flex;gap:6px;align-items:center;background:#0f1a3e;border:1px solid rgba(255,255,255,.08);border-radius:999px;padding:6px 10px;font-size:12px;margin:4px 6px 0 0}
+  .xbtn{background:none;border:none;color:#aeb9d9;font-size:13px;cursor:pointer;padding:10px 12px}
+  .head{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,.08);padding:10px 12px}
+  .head h3{margin:0;font-size:15px}
+  .empty{color:var(--muted);text-align:center;padding:18px 6px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Карта эмоций — 118 состояний по интенсивности</h1>
+  <div class="sub">6 базовых дорожек (Экман) × 4 уровня интенсивности. Используйте поиск/фильтры. Нажмите на эмоцию для пояснения.</div>
+  <div class="controls">
+    <input id="q" type="search" placeholder="Поиск эмоции (например: «ярость», «надежда»)">
+    <select id="f-base">
+      <option value="">Все базовые</option>
+      <option value="Радость">Радость</option>
+      <option value="Грусть">Грусть</option>
+      <option value="Страх">Страх</option>
+      <option value="Гнев">Гнев</option>
+      <option value="Отвращение">Отвращение</option>
+      <option value="Удивление">Удивление</option>
+    </select>
+    <select id="f-level">
+      <option value="">Все уровни</option>
+      <option value="Низкая">Низкая</option>
+      <option value="Средняя">Средняя</option>
+      <option value="Высокая">Высокая</option>
+      <option value="Пиковая">Пиковая</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="legend">
+    <div class="item"><span class="sw" style="background:var(--joy)"></span>Радость</div>
+    <div class="item"><span class="sw" style="background:var(--sad)"></span>Грусть</div>
+    <div class="item"><span class="sw" style="background:var(--fear)"></span>Страх</div>
+    <div class="item"><span class="sw" style="background:var(--anger)"></span>Гнев</div>
+    <div class="item"><span class="sw" style="background:var(--disgust)"></span>Отвращение</div>
+    <div class="item"><span class="sw" style="background:var(--surprise)"></span>Удивление</div>
+  </div>
+
+  <div id="grid" class="grid"></div>
+  <div class="footer">
+    Всего эмоций: <span id="total" class="count">0</span>. Отфильтровано: <span id="shown" class="count">0</span>.
+  </div>
+</main>
+
+<dialog id="dlg">
+  <div class="head">
+    <h3 id="dlg-title">Эмоция</h3>
+    <button class="xbtn" onclick="dlg.close()">Закрыть ✕</button>
+  </div>
+  <div class="md">
+    <h4 id="dlg-sub"></h4>
+    <p id="dlg-desc"></p>
+    <div id="dlg-tags"></div>
+  </div>
+</dialog>
+
+<script>
+const dataRaw = [
+  // Формат: [эмоция, базовая, уровень, пояснение]
+  ["Облегчение","Радость","Средняя","Радость после снятия угрозы; оттенок удивления."],
+  ["Благодарность","Радость","Средняя","Позитив к источнику пользы; социальная радость."],
+  ["Достоинство","Радость","Средняя","Самопринятие и ценность; спокойная радость."],
+  ["Признательность","Радость","Средняя","Социальная благодарность; теплая радость."],
+  ["Мягкость","Радость","Низкая","Спокойное принятие, доброжелательность."],
+  ["Неприязнь","Отвращение","Низкая","Слабое отталкивание/несимпатия."],
+  ["Пренебрежение","Отвращение","Средняя","Отталкивание с чувством превосходства."],
+  ["Брезгливость","Отвращение","Низкая","Физическое/моральное отвращение низкой интенсивности."],
+  ["Экстаз","Радость","Пиковая","Пиковая радость, трансперсональная эйфория."],
+  ["Азарт","Радость","Средняя","Возбужденная радость ожидания успеха."],
+  ["Высокомерие","Отвращение","Высокая","Отвращение + превосходство; иногда примесь радости."],
+  ["Гордость","Радость","Высокая","Радость от собственных достижений."],
+  ["Отвращение","Отвращение","Пиковая","Сильное неприятие/отталкивание."],
+  ["Зависть","Грусть","Средняя","Грусть по недостающему + гнев; помещено в грусть, средняя."],
+  ["Дерзость","Гнев","Средняя","Напористость, вызов; гневная энергия."],
+  ["Осознанность","Удивление","Низкая","Ясность восприятия; мягкое удивление/инсайт."],
+  ["Ответственность","Удивление","Низкая","Осознанный выбор; близко к спокойному принятию."],
+  ["Ностальгия","Грусть","Низкая","Светлая грусть по прошлому."],
+  ["Недоверие","Страх","Средняя","Предосторожность перед возможной угрозой."],
+  ["Вера","Радость","Средняя","Позитивное ожидание; смесь радости и удивления."],
+  ["Нерешительность","Страх","Низкая","Неопределенность, боязнь ошибиться."],
+  ["Одиночество","Грусть","Средняя","Боль отсутствия связи/близости."],
+  ["Отверженность","Грусть","Высокая","Сильная социальная боль; примесь страха."],
+  ["Грусть","Грусть","Средняя","Базовая грусть средней интенсивности."],
+  ["Лень","Грусть","Низкая","Энергетический спад; апатичность."],
+  ["Позор","Страх","Высокая","Страх социального осуждения; примесь грусти."],
+  ["Безнадежность","Грусть","Высокая","Потеря ожидания улучшения."],
+  ["Подавленность","Грусть","Высокая","Тяжелое, устойчивое снижение настроения."],
+  ["Печаль","Грусть","Средняя","Близко к грусти; умеренная интенсивность."],
+  ["Беспомощность","Страх","Высокая","Ощущение утраты контроля; близко к страху."],
+  ["Конфуз","Удивление","Средняя","Смущающее удивление; примесь страха."],
+  ["Уязвленность","Грусть","Высокая","Боль/обида, близко к грусти и страху."],
+  ["Униженность","Грусть","Высокая","Социальная боль; грусть + страх."],
+  ["Опустошенность","Грусть","Высокая","Сильное чувство потери/пустоты."],
+  ["Бессилие","Грусть","Высокая","Нет сил/возможности действовать; близко к грусти."],
+  ["Раскаяние","Грусть","Средняя","Печаль о содеянном + мотивация исправить."],
+  ["Стыд","Страх","Средняя","Страх оценки себя другими; иногда грусть."],
+  ["Обида","Гнев","Средняя","Гнев от пережитой несправедливости; примесь грусти."],
+  ["Уважение","Радость","Средняя","Теплое признание ценности другого."],
+  ["Желание","Радость","Средняя","Направленная позитивная мотивация."],
+  ["Влечение","Радость","Средняя","Притяжение/интерес к объекту; позитивный заряд."],
+  ["Смелость","Страх","Низкая","Действие несмотря на страх; контроль над страхом."],
+  ["Страсть","Радость","Высокая","Сильная вовлеченность и энергия."],
+  ["Восторг","Радость","Высокая","Сильная радость и восхищение."],
+  ["Наслаждение","Радость","Средняя","Удовольствие от процесса/результата."],
+  ["Блаженство","Радость","Пиковая","Глубокая, спокойная пиковая радость."],
+  ["Эйфория","Радость","Пиковая","Пик возбуждённой радости."],
+  ["Предвкушение","Удивление","Средняя","Ожидание новизны; радостное напряжение."],
+  ["Вдохновение","Удивление","Высокая","Сильный инсайт + подъём радости."],
+  ["Любопытство","Удивление","Низкая","Мягкое стремление к новому/неизвестному."],
+  ["Сочувствие","Грусть","Средняя","Разделение чужой боли; грусть с теплотой."],
+  ["Сострадание","Грусть","Высокая","Глубокая эмпатия к страданию другого."],
+  ["Уверенность","Радость","Средняя","Спокойная позитивная определённость."],
+  ["Тревога","Страх","Средняя","Угроза неопределенная; настороженность."],
+  ["Тоска","Грусть","Средняя","Тягостная грусть/желание недостижимого."],
+  ["Досада","Гнев","Низкая","Лёгкое недовольство; низкий гнев."],
+  ["Растерянность","Удивление","Средняя","Потеря ориентиров при неожиданности."],
+  ["Ненависть","Гнев","Пиковая","Пик гнева с отвращением; враждебность."],
+  ["Осознание","Удивление","Высокая","Сильный инсайт; переход к действию."],
+  ["Ревность","Страх","Высокая","Страх утраты + гнев; помещено в страх."],
+  ["Скука","Грусть","Низкая","Низкоэнергетическая грусть/дефицит стимула."],
+  ["Возмущение","Гнев","Средняя","Проактивный гнев к нарушению норм."],
+  ["Боль","Грусть","Высокая","Эмоциональная боль; потеря/нехватка."],
+  ["Любовь","Радость","Высокая","Спектр от нежности до экстаза; здесь как высокая радость."],
+  ["Горе","Грусть","Пиковая","Пик грусти/утраты."],
+  ["Радость","Радость","Высокая","Базовая высокая радость."],
+  ["Озадаченность","Удивление","Низкая","Слабое удивление, вопросительность."],
+  ["Решимость","Гнев","Высокая","Энергия преодоления; направленный гнев."],
+  ["Раздражение","Гнев","Низкая","Низкоуровневый гнев."],
+  ["Отрицание эмоций","Страх","Средняя","Стратегия избегания чувств; страх столкновения."],
+  ["Восхищение","Радость","Высокая","Радость + удивление перед превосходством."],
+  ["Надежда","Радость","Средняя","Позитивное ожидание исхода."],
+  ["Энтузиазм","Радость","Высокая","Энергичная радость, готовность действовать."],
+  ["Обреченность","Грусть","Высокая","Смирение с негативным исходом; безысходность."],
+  ["Апатия","Грусть","Высокая","Глубокое безразличие; низкая энергия."],
+  ["Подозрение","Страх","Средняя","Ожидание злого умысла."],
+  ["Волнение","Страх","Средняя","Возбужденный страх/ожидание; может быть и радость."],
+  ["Жалость","Грусть","Низкая","Лёгкая грусть к чужой уязвимости."],
+  ["Недовольство","Гнев","Средняя","Устойчивое несогласие; ближе к гневу."],
+  ["Стеснительность","Страх","Низкая","Социальный страх, мягкий."],
+  ["Безопасность","Радость","Низкая","Спокойная позитивность от защищенности."],
+  ["Озарение","Удивление","Высокая","Сильное удивление-понимание."],
+  ["Поддержка","Радость","Низкая","Чувство опоры; спокойная радость."],
+  ["Удовлетворение","Радость","Низкая","Спокойная завершенность; низкая радость."],
+  ["Недоумение","Удивление","Средняя","Сильнее озадаченности, но без шока."],
+  ["Удивление","Удивление","Высокая","Базовая сильная реакция новизны."],
+  ["Удовольствие","Радость","Средняя","Позитивный аффект от стимула/деятельности."],
+  ["Доверие","Радость","Низкая","Спокойное принятие и опора на другого."],
+  ["Единство","Радость","Средняя","Сопричастность; тёплая радость."],
+  ["Принятие","Радость","Низкая","Спокойная согласованность с реальностью."],
+  ["Сарказм","Отвращение","Средняя","Отталкивание, выраженное остро/иронично."],
+  ["Злорадство","Отвращение","Высокая","Отвращение + радость от чужой неудачи."],
+  ["Агрессия","Гнев","Высокая","Действующий гнев."],
+  ["Неуверенность","Страх","Низкая","Слабый страх собственной несостоятельности."],
+  ["Вина","Страх","Средняя","Страх оценки + желание исправить; примесь грусти."],
+  ["Возбуждение","Радость","Средняя","Энергетический подъём/sexual arousal; позитивный тон."],
+  ["Легкость","Радость","Низкая","Облегчённое, воздушное состояние."],
+  ["Веселье","Радость","Средняя","Активная радость, шуточность."],
+  ["Испуг","Страх","Высокая","Острая краткая реакция на угрозу; ближе к высокой."],
+  ["Жадность","Отвращение","Средняя","Социально неодобряемое стремление; примесь страха."],
+  ["Ликование","Радость","Высокая","Торжествующая радость."],
+  ["Ирония","Отвращение","Средняя","Мягкая форма отторжения через насмешку."],
+  ["Интерес","Удивление","Низкая","Тёплое направленное удивление."],
+  ["Страх","Страх","Высокая","Базовый сильный страх."],
+  ["Разочарование","Грусть","Средняя","Потерянные ожидания + лёгкий гнев."],
+  ["Презрение","Отвращение","Высокая","Сильное моральное отторжение."],
+  ["Спокойствие","Радость","Низкая","Позитивный гомеостаз/равновесие."],
+  ["Нежность","Радость","Низкая","Тёплая мягкая радость к объекту привязанности."],
+  ["Сопротивление","Гнев","Средняя","Энергия отказа/противостояния."],
+  ["Протест","Гнев","Средняя","Активный отказ/несогласие; социальный гнев."],
+  ["Гнев","Гнев","Высокая","Базовая высокая интенсивность гнева."],
+  ["Ярость","Гнев","Пиковая","Пик гнева; утрата контроля."],
+  ["Злость","Гнев","Средняя","Сильнее раздражения, но ниже гнева."],
+  ["Потрясение","Удивление","Пиковая","Шоковая вершина удивления."],
+  ["Сомнение","Страх","Низкая","Низкий страх ошибки/неопределённости."],
+  ["Паника","Страх","Пиковая","Пик страха с потерей контроля."],
+  ["Ужас","Страх","Пиковая","Пик страха, парализующий."],
+];
+
+const lanes = [
+  { base:"Радость", color:"var(--joy)" },
+  { base:"Грусть", color:"var(--sad)" },
+  { base:"Страх", color:"var(--fear)" },
+  { base:"Гнев", color:"var(--anger)" },
+  { base:"Отвращение", color:"var(--disgust)" },
+  { base:"Удивление", color:"var(--surprise)" },
+];
+
+const levels = ["Низкая","Средняя","Высокая","Пиковая"];
+
+const gridEl = document.getElementById('grid');
+const qEl = document.getElementById('q');
+const fBaseEl = document.getElementById('f-base');
+const fLevelEl = document.getElementById('f-level');
+const totalEl = document.getElementById('total');
+const shownEl = document.getElementById('shown');
+const dlg = document.getElementById('dlg');
+const dlgTitle = document.getElementById('dlg-title');
+const dlgSub = document.getElementById('dlg-sub');
+const dlgDesc = document.getElementById('dlg-desc');
+const dlgTags = document.getElementById('dlg-tags');
+
+const items = dataRaw.map(([name,base,level,desc])=>({name,base,level,desc}));
+
+function build() {
+  gridEl.innerHTML = '';
+  let shownCount = 0;
+  const q = (qEl.value||'').trim().toLowerCase();
+  const fBase = fBaseEl.value;
+  const fLevel = fLevelEl.value;
+
+  lanes.forEach(l=>{
+    const lane = document.createElement('section');
+    lane.className = 'lane';
+    const h2 = document.createElement('h2');
+    const dot = document.createElement('span');
+    dot.className = 'dot';
+    dot.style.background = l.color;
+    h2.appendChild(dot);
+    const title = document.createElement('span');
+    title.textContent = l.base;
+    h2.appendChild(title);
+    lane.appendChild(h2);
+
+    const levelsWrap = document.createElement('div');
+    levelsWrap.className = 'levels';
+
+    levels.forEach(level=>{
+      const col = document.createElement('div');
+      col.className = 'col';
+      const h3 = document.createElement('h3');
+      h3.textContent = level;
+      col.appendChild(h3);
+      const chips = document.createElement('div');
+      chips.className = 'chips';
+
+      const filtered = items.filter(it=>{
+        if(it.base!==l.base) return false;
+        if(it.level!==level) return false;
+        if(fBase && it.base!==fBase) return false;
+        if(fLevel && it.level!==fLevel) return false;
+        if(q && !it.name.toLowerCase().includes(q)) return false;
+        return true;
+      });
+
+      if(filtered.length===0){
+        const empty = document.createElement('div');
+        empty.className = 'empty muted';
+        empty.textContent = '—';
+        col.appendChild(empty);
+      } else {
+        filtered.forEach(it=>{
+          const chip = document.createElement('button');
+          chip.className = 'chip';
+          chip.textContent = it.name;
+          chip.title = it.desc;
+          chip.onclick = ()=>openDialog(it);
+          chips.appendChild(chip);
+          shownCount++;
+        });
+        col.appendChild(chips);
+      }
+      levelsWrap.appendChild(col);
+    });
+
+    lane.appendChild(levelsWrap);
+    gridEl.appendChild(lane);
+  });
+
+  totalEl.textContent = items.length.toString();
+  shownEl.textContent = shownCount.toString();
+}
+
+function openDialog(it){
+  dlgTitle.textContent = it.name;
+  dlgSub.textContent = `${it.base} • ${it.level} интенсивность`;
+  dlgDesc.textContent = it.desc || '';
+  dlgTags.innerHTML = `
+    <span class="badge">Базовая: ${it.base}</span>
+    <span class="badge">Уровень: ${it.level}</span>
+  `;
+  if(typeof dlg.showModal==='function'){ dlg.showModal(); }
+  else { alert(it.name + " — " + it.base + " / " + it.level); }
+}
+
+qEl.addEventListener('input',build);
+fBaseEl.addEventListener('change',build);
+fLevelEl.addEventListener('change',build);
+
+build();
+</script>
+
+
+</body></html>
