@@ -20,13 +20,7 @@
     padding:10px 12px;border-radius:10px;outline:none;font-size:14px;width:100%
   }
   input::placeholder{color:#a8b3cf}
-  main{
-  max-width:1200px;
-  margin:16px auto;
-  padding:0 16px;
-  height:calc(100vh - 190px);
-  overflow:hidden;
-}
+  .main{max-width:1200px;margin:16px auto;padding:0 16px 32px}
   .legend{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
   .legend .item{display:flex;align-items:center;gap:8px;background:var(--pill);padding:8px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.06);font-size:12px;color:var(--muted)}
   .sw{width:12px;height:12px;border-radius:3px}
@@ -36,22 +30,10 @@
   .lane{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:14px;overflow:hidden}
   .lane h2{margin:0;padding:12px 14px;font-size:16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,.06)}
   .lane h2 .dot{width:10px;height:10px;border-radius:50%}
-  .levels{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:10px;
-  padding:12px;
-  height:100%;
-  overflow:hidden;
-}
+ .levels{display:grid;grid-template-columns:repeat(4, 1fr);gap:10px;padding:12px}
   .col{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.05);border-radius:12px;padding:10px;display:flex;flex-direction:column;min-height:180px}
   .col h3{margin:2px 2px 8px;font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.6px}
-  .chips{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-  overflow-y:auto;
-}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
   .chip{
     background:var(--chip);border:1px solid rgba(255,255,255,.06);color:var(--text);
     padding:7px 9px;border-radius:999px;font-size:13px;cursor:pointer;transition:.15s ease;
