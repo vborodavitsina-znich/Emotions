@@ -461,6 +461,107 @@ const dataRaw = [
 ["Замешательство","Удивление","Средняя","Неведение, легкое удивление.","Что меня смущает?"]
 ];
 </script>
+<script>
+const bases = ["Радость","Грусть","Страх","Гнев","Отвращение","Удивление"];
+const levels = ["Низкая","Средняя","Высокая","Пиковая"];
+
+const colors = {
+  "Радость":"var(--joy)",
+  "Грусть":"var(--sad)",
+  "Страх":"var(--fear)",
+  "Гнев":"var(--anger)",
+  "Отвращение":"var(--disgust)",
+  "Удивление":"var(--surprise)"
+};
+
+const grid = document.getElementById("grid");
+const qInput = document.getElementById("q");
+const fBase = document.getElementById("f-base");
+const fLevel = document.getElementById("f-level");
+const totalEl = document.getElementById("total");
+const shownEl = document.getElementById("shown");
+
+const dlg = document.getElementById("dlg");
+const dlgTitle = document.getElementById("dlg-title");
+const dlgDesc = document.getElementById("dlg-desc");
+const dlgQuestion = document.getElementById("dlg-question");
+const dlgTags = document.getElementById("dlg-tags");
+
+totalEl.textContent = dataRaw.length;
+
+function render(){
+  const q = qInput.value.toLowerCase();
+  const baseFilter = fBase.value;
+  const levelFilter = fLevel.value;
+
+  const filtered = dataRaw.filter(([name, base, level])=>{
+    return (!baseFilter || base===baseFilter)
+      && (!levelFilter || level===levelFilter)
+      && name.toLowerCase().includes(q);
+  });
+
+  shownEl.textContent = filtered.length;
+  grid.innerHTML = "";
+
+  bases.forEach(base=>{
+    const baseItems = filtered.filter(e=>e[1]===base);
+    if(!baseItems.length) return;
+
+    const lane = document.createElement("div");
+    lane.className = "lane";
+
+    lane.innerHTML = `
+      <h2>
+        <span class="dot" style="background:${colors[base]}"></span>
+        ${base}
+      </h2>
+      <div class="levels"></div>
+    `;
+
+    const levelsWrap = lane.querySelector(".levels");
+
+    levels.forEach(level=>{
+      const col = document.createElement("div");
+      col.className = "col";
+      col.innerHTML = `<h3>${level}</h3><div class="chips"></div>`;
+      const chipsWrap = col.querySelector(".chips");
+
+      baseItems
+        .filter(e=>e[2]===level)
+        .forEach(([name, base, level, desc, question])=>{
+          const chip = document.createElement("div");
+          chip.className = "chip";
+          chip.textContent = name;
+
+          chip.onclick = ()=>{
+            dlgTitle.textContent = name;
+            dlgDesc.textContent = desc;
+            dlgQuestion.textContent = question;
+            dlgTags.innerHTML = `
+              <span class="badge">${base}</span>
+              <span class="badge">${level}</span>
+            `;
+            dlg.showModal();
+          };
+
+          chipsWrap.appendChild(chip);
+        });
+
+      if(chipsWrap.children.length){
+        levelsWrap.appendChild(col);
+      }
+    });
+
+    grid.appendChild(lane);
+  });
+}
+
+qInput.addEventListener("input", render);
+fBase.addEventListener("change", render);
+fLevel.addEventListener("change", render);
+
+render();
+</script>
 
 </body>
 </html>
