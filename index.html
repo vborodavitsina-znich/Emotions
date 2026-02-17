@@ -4,19 +4,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Карта эмоций — 140 не повторяющихся состояний</title>
+
 <style>
 :root{
   --bg:#0b1020; --card:#121936; --muted:#8ea0c7; --text:#e7ecf7;
   --joy:#3ddc97; --sad:#7aa2f7; --fear:#f6c177; --anger:#ef596f; --disgust:#74c7a5; --surprise:#f4d35e;
   --chip:#1a2348; --chip-hover:#223062; --pill:#0e1633; --accent:#9bdbff;
 }
+
 *{box-sizing:border-box}
+
 body{
   margin:0;
   background:linear-gradient(180deg,#0b1020 0%,#0e1836 100%);
   color:var(--text);
   font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif
 }
+
 header{
   padding:20px 16px 10px;
   position:sticky;
@@ -26,50 +30,126 @@ header{
   z-index:10;
   border-bottom:1px solid rgba(255,255,255,.06)
 }
+
 h1{margin:0 0 6px;font-size:20px}
 .sub{color:var(--muted);font-size:13px;margin-bottom:10px}
-.controls{display:grid;gap:8px;grid-template-columns:1fr;max-width:1200px;margin:0 auto}
-@media(min-width:700px){.controls{grid-template-columns: 1.2fr .9fr .9fr}}
+
+.controls{
+  display:grid;
+  gap:8px;
+  grid-template-columns:1fr;
+  max-width:1200px;
+  margin:0 auto
+}
+
+@media(min-width:700px){
+  .controls{
+    grid-template-columns: 1.2fr .9fr .9fr
+  }
+}
+
 input,select{
   background:var(--card);
   border:1px solid rgba(255,255,255,.1);
   color:var(--text);
   padding:10px 12px;
   border-radius:10px;
-  font-size:14px;
+  font-size:16px; /* важно для iOS */
   width:100%
 }
+
 .main{max-width:1200px;margin:16px auto;padding:0 16px 32px}
-.legend{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
-.legend .item{
-  display:flex;align-items:center;gap:8px;
-  background:var(--pill);
-  padding:8px 10px;border-radius:999px;
-  border:1px solid rgba(255,255,255,.06);
-  font-size:12px;color:var(--muted)
+
+.legend{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-bottom:14px
 }
+
+.legend .item{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  background:var(--pill);
+  padding:8px 10px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.06);
+  font-size:12px;
+  color:var(--muted)
+}
+
 .sw{width:12px;height:12px;border-radius:3px}
+
 .grid{display:grid;gap:14px}
-@media(min-width:800px){.grid{grid-template-columns: repeat(2, minmax(0,1fr))}}
-@media(min-width:1100px){.grid{grid-template-columns: repeat(3, minmax(0,1fr))}}
+
+@media(min-width:800px){
+  .grid{
+    grid-template-columns: repeat(2, minmax(0,1fr))
+  }
+}
+
+@media(min-width:1100px){
+  .grid{
+    grid-template-columns: repeat(3, minmax(0,1fr))
+  }
+}
+
 .lane{
   background:var(--card);
   border:1px solid rgba(255,255,255,.08);
   border-radius:14px;
   overflow:hidden
 }
+
 .lane h2{
-  margin:0;padding:12px 14px;font-size:16px;
-  display:flex;align-items:center;gap:10px;
+  margin:0;
+  padding:12px 14px;
+  font-size:16px;
+  display:flex;
+  align-items:center;
+  gap:10px;
   border-bottom:1px solid rgba(255,255,255,.06)
 }
-.lane h2 .dot{width:10px;height:10px;border-radius:50%}
+
+.lane h2 .dot{
+  width:10px;
+  height:10px;
+  border-radius:50%
+}
+
 .levels{
   display:grid;
   grid-template-columns:repeat(4, 1fr);
   gap:10px;
   padding:12px
 }
+
+/* МОБИЛЬНАЯ АДАПТАЦИЯ */
+@media(max-width: 600px){
+  .levels{
+    grid-template-columns: 1fr;
+  }
+
+  header{
+    padding:14px 12px 8px;
+  }
+
+  h1{
+    font-size:18px;
+  }
+
+  .legend .item{
+    font-size:11px;
+    padding:6px 8px;
+  }
+
+  .chip{
+    padding:10px 12px;
+    font-size:14px;
+  }
+}
+
 .col{
   background:rgba(255,255,255,.02);
   border:1px solid rgba(255,255,255,.05);
@@ -77,10 +157,20 @@ input,select{
   padding:10px;
   display:flex;
   flex-direction:column;
-  min-height:180px
+  min-height:160px
 }
-.col h3{margin:2px 2px 8px;font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.6px}
+
+.col h3{
+  margin:2px 2px 8px;
+  font-size:12px;
+  color:var(--muted);
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:.6px
+}
+
 .chips{display:flex;flex-wrap:wrap;gap:8px}
+
 .chip{
   background:var(--chip);
   border:1px solid rgba(255,255,255,.06);
@@ -91,12 +181,25 @@ input,select{
   cursor:pointer;
   transition:.15s ease;
 }
-.chip:hover{background:var(--chip-hover);transform:translateY(-1px)}
-.muted{opacity:.6}
-.footer{color:var(--muted);font-size:12px;margin-top:18px;line-height:1.55}
+
+.chip:hover{
+  background:var(--chip-hover);
+  transform:translateY(-1px)
+}
+
+.footer{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:18px;
+  line-height:1.55
+}
+
 .count{color:var(--accent);font-weight:600}
+
 dialog{
   width:min(680px, calc(100% - 32px));
+  max-height:90vh;
+  overflow:auto;
   border:1px solid rgba(255,255,255,.2);
   border-radius:14px;
   padding:0;
@@ -104,23 +207,61 @@ dialog{
   color:var(--text);
   box-shadow:0 20px 60px rgba(0,0,0,.5)
 }
-dialog::backdrop{background:rgba(3,6,16,.6);backdrop-filter: blur(2px)}
+
+dialog::backdrop{
+  background:rgba(3,6,16,.6);
+  backdrop-filter: blur(2px)
+}
+
 .md{padding:16px}
+
 .md h4{margin:0 0 6px;font-size:16px}
+
 .md p{margin:0 0 8px;color:#c7d0ea;font-size:14px}
-.badge{display:inline-flex;gap:6px;align-items:center;background:#0f1a3e;border:1px solid rgba(255,255,255,.08);border-radius:999px;padding:6px 10px;font-size:12px;margin:4px 6px 0 0}
-.xbtn{background:none;border:none;color:#aeb9d9;font-size:13px;cursor:pointer;padding:10px 12px}
-.head{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,.08);padding:10px 12px}
-.empty{color:var(--muted);text-align:center;padding:18px 6px}
+
+.badge{
+  display:inline-flex;
+  gap:6px;
+  align-items:center;
+  background:#0f1a3e;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:999px;
+  padding:6px 10px;
+  font-size:12px;
+  margin:4px 6px 0 0
+}
+
+.xbtn{
+  background:none;
+  border:none;
+  color:#aeb9d9;
+  font-size:13px;
+  cursor:pointer;
+  padding:10px 12px
+}
+
+.head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-bottom:1px solid rgba(255,255,255,.08);
+  padding:10px 12px
+}
+
+.empty{
+  color:var(--muted);
+  text-align:center;
+  padding:18px 6px
+}
 </style>
 </head>
 <body>
+
 <header>
 <h1>Карта эмоций — 140 не повторяющихся состояний</h1>
-<div class="sub">6 базовых эмоций × 4 уровня интенсивности. Используйте поиск/фильтры. Нажмите на эмоцию для пояснения и вопроса.</div>
-<div class="sub">Создано по мотивам МАК карт "Неслучайные эмоции" и книги Н.Кедровой "Азбука эмоций".</div>
+<div class="sub">6 базовых эмоций × 4 уровня интенсивности.</div>
 <div class="controls">
-<input id="q" type="search" placeholder="Поиск эмоции (например: «ярость», «печаль»)">
+<input id="q" type="search" placeholder="Поиск эмоции">
 <select id="f-base">
 <option value="">Все базовые</option>
 <option value="Радость">Радость</option>
@@ -140,19 +281,11 @@ dialog::backdrop{background:rgba(3,6,16,.6);backdrop-filter: blur(2px)}
 </div>
 </header>
 
-<main>
-<div class="legend">
-<div class="item"><span class="sw" style="background:var(--joy)"></span>Радость</div>
-<div class="item"><span class="sw" style="background:var(--sad)"></span>Грусть</div>
-<div class="item"><span class="sw" style="background:var(--fear)"></span>Страх</div>
-<div class="item"><span class="sw" style="background:var(--anger)"></span>Гнев</div>
-<div class="item"><span class="sw" style="background:var(--disgust)"></span>Отвращение</div>
-<div class="item"><span class="sw" style="background:var(--surprise)"></span>Удивление</div>
-</div>
-
+<main class="main">
 <div id="grid" class="grid"></div>
 <div class="footer">
-Всего эмоций: <span id="total" class="count">0</span>. Отфильтровано: <span id="shown" class="count">0</span>.
+Всего эмоций: <span id="total" class="count">0</span>. 
+Отфильтровано: <span id="shown" class="count">0</span>.
 </div>
 </main>
 
@@ -169,7 +302,7 @@ dialog::backdrop{background:rgba(3,6,16,.6);backdrop-filter: blur(2px)}
 </dialog>
 
 <script>
-// --- Массив из 135 эмоций (название, базовая, уровень, описание, вопрос) ---
+// --- Массив из 140 эмоций (название, базовая, уровень, описание, вопрос) ---
 const dataRaw = [
 // --- Радость 40 ---
 ["Блаженство","Радость","Пиковая","Глубокая, спокойная пиковая радость.","Что приносит глубокий покой и тепло?"],
@@ -327,91 +460,7 @@ const dataRaw = [
 ["Восхищение","Удивление","Высокая","Положительное удивление и уважение.","Что здесь красиво и ценно для меня?"],
 ["Замешательство","Удивление","Средняя","Неведение, легкое удивление.","Что меня смущает?"]
 ];
-  
-const lanes = [
-{ base:"Радость", color:"var(--joy)" },
-{ base:"Грусть", color:"var(--sad)" },
-{ base:"Страх", color:"var(--fear)" },
-{ base:"Гнев", color:"var(--anger)" },
-{ base:"Отвращение", color:"var(--disgust)" },
-{ base:"Удивление", color:"var(--surprise)" }
-];
-
-const levels = ["Низкая","Средняя","Высокая","Пиковая"];
-
-const items = dataRaw.map(([name,base,level,desc,question])=>({name,base,level,desc,question}));
-
-function build(){
-  const grid=document.getElementById("grid");
-  grid.innerHTML="";
-  let shown=0;
-  const q=document.getElementById("q").value.trim().toLowerCase();
-  const fBase=document.getElementById("f-base").value;
-  const fLevel=document.getElementById("f-level").value;
-
-  lanes.forEach(l=>{
-    const lane=document.createElement("section");
-    lane.className="lane";
-
-    const h2=document.createElement("h2");
-    const dot=document.createElement("span");
-    dot.className="dot"; dot.style.background=l.color;
-    h2.appendChild(dot); h2.appendChild(document.createTextNode(l.base));
-    lane.appendChild(h2);
-
-    const wrap=document.createElement("div");
-    wrap.className="levels";
-
-    levels.forEach(level=>{
-      const col=document.createElement("div"); col.className="col";
-      const h3=document.createElement("h3"); h3.textContent=level; col.appendChild(h3);
-      const chips=document.createElement("div"); chips.className="chips";
-
-      const filtered = items.filter(it=>{
-        if(it.base!==l.base) return false;
-        if(it.level!==level) return false;
-        if(fBase && it.base!==fBase) return false;
-        if(fLevel && it.level!==fLevel) return false;
-        if(q && !it.name.toLowerCase().includes(q)) return false;
-        return true;
-      });
-
-      if(filtered.length===0){
-        const empty=document.createElement("div"); empty.className="empty muted"; empty.textContent="—";
-        col.appendChild(empty);
-      } else {
-        filtered.forEach(it=>{
-          const chip=document.createElement("button"); chip.className="chip"; chip.textContent=it.name;
-          chip.onclick=()=>openDialog(it);
-          chips.appendChild(chip); shown++;
-        });
-        col.appendChild(chips);
-      }
-      wrap.appendChild(col);
-    });
-
-    lane.appendChild(wrap);
-    grid.appendChild(lane);
-  });
-
-  document.getElementById("total").textContent=items.length;
-  document.getElementById("shown").textContent=shown;
-}
-
-function openDialog(it){
-  document.getElementById("dlg-title").textContent=it.name;
-  document.getElementById("dlg-desc").textContent=it.desc;
-  document.getElementById("dlg-question").textContent="Вопрос: "+it.question;
-  document.getElementById("dlg-tags").innerHTML=
-    `<span class="badge">${it.base}</span> <span class="badge">${it.level}</span>`;
-  dlg.showModal();
-}
-
-document.getElementById("q").addEventListener("input",build);
-document.getElementById("f-base").addEventListener("change",build);
-document.getElementById("f-level").addEventListener("change",build);
-
-build();
 </script>
+
 </body>
 </html>
