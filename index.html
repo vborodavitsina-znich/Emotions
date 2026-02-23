@@ -180,11 +180,11 @@ dialog::backdrop { background: rgba(0,0,0,0.8); backdrop-filter: blur(4px); }
         <option value="Удивление">Удивление</option>
       </select>
       <select id="f-level">
-        <option value="">Уровень интенсивности эмоций</option>
-        <option value="Низкий">Низкий</option>
-        <option value="Средний">Средний</option>
-        <option value="Высокий">Высокий</option>
-        <option value="Пиковый">Пиковый</option>
+        <option value="">Интенсивность эмоций</option>
+        <option value="Низкая">Низкая</option>
+        <option value="Средняя">Средняя</option>
+        <option value="Высокая">Высокая</option>
+        <option value="Пиковая">Пиковая</option>
       </select>
     </div>
     <div class="stats">Показано: <span id="shown">0</span> из <span id="total">0</span> состояний</div>
@@ -369,7 +369,7 @@ const dataRaw = [
 ];
 
 const bases = ["Радость","Грусть","Страх","Гнев","Отвращение","Удивление"];
-const levels = ["Низкий","Средний","Высокий","Пиковый"];
+const levels = ["Низкая","Средняя","Высокая","Пиковая"];
 const colors = {"Радость":"var(--joy)","Грусть":"var(--sad)","Страх":"var(--fear)","Гнев":"var(--anger)","Отвращение":"var(--disgust)","Удивление":"var(--surprise)"};
 
 const grid = document.getElementById("grid");
