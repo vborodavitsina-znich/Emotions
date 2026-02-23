@@ -18,28 +18,52 @@ body{
   margin:0;
   background:linear-gradient(180deg,#0b1020 0%,#0e1836 100%);
   color:var(--text);
-  font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif
+  font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;
+  line-height: 1.5;
 }
 
 header{
-  padding:20px 16px 10px;
+  padding:20px 16px 15px;
   position:sticky;
   top:0;
-  background:linear-gradient(180deg, rgba(11,16,32,.95), rgba(11,16,32,.70));
-  backdrop-filter: blur(6px);
+  background:linear-gradient(180deg, rgba(11,16,32,0.98), rgba(11,16,32,0.85));
+  backdrop-filter: blur(12px);
   z-index:10;
   border-bottom:1px solid rgba(255,255,255,.06)
 }
 
-h1{margin:0 0 6px;font-size:20px}
-.sub{color:var(--muted);font-size:13px;margin-bottom:10px}
+.container-narrow {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+h1{margin:0 0 6px;font-size:22px; font-weight: 700; letter-spacing: -0.02em;}
+
+.intro-text {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  padding: 16px;
+  margin: 12px 0 20px;
+  border-left: 3px solid var(--accent);
+  font-size: 14px;
+  color: var(--text);
+}
+
+.intro-text p {
+  margin: 0 0 8px;
+}
+
+.intro-text ul {
+  margin: 0;
+  padding-left: 20px;
+  color: var(--muted);
+}
 
 .controls{
   display:grid;
   gap:8px;
   grid-template-columns:1fr;
-  max-width:1200px;
-  margin:0 auto
+  margin-bottom: 10px;
 }
 
 @media(min-width:700px){
@@ -52,254 +76,202 @@ input,select{
   background:var(--card);
   border:1px solid rgba(255,255,255,.1);
   color:var(--text);
-  padding:10px 12px;
+  padding:12px;
   border-radius:10px;
-  font-size:16px; /* важно для iOS */
-  width:100%
+  font-size:16px;
+  width:100%;
+  transition: border-color 0.2s;
+}
+
+input:focus, select:focus {
+  outline: none;
+  border-color: var(--accent);
 }
 
 .main{max-width:1200px;margin:16px auto;padding:0 16px 32px}
 
-.legend{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-  margin-bottom:14px
+.stats {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 15px;
+  display: flex;
+  gap: 15px;
 }
 
-.legend .item{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  background:var(--pill);
-  padding:8px 10px;
-  border-radius:999px;
-  border:1px solid rgba(255,255,255,.06);
-  font-size:12px;
-  color:var(--muted)
+.lane {
+  margin-bottom: 30px;
 }
 
-.sw{width:12px;height:12px;border-radius:3px}
-
-.grid{display:grid;gap:14px}
-
-@media(min-width:800px){
-  .grid{
-    grid-template-columns: repeat(2, minmax(0,1fr))
-  }
+.lane h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 18px;
+  margin-bottom: 15px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
-@media(min-width:1100px){
-  .grid{
-    grid-template-columns: repeat(3, minmax(0,1fr))
-  }
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
 }
 
-.lane{
-  background:var(--card);
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:14px;
-  overflow:hidden
+.levels {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
 }
 
-.lane h2{
-  margin:0;
-  padding:12px 14px;
-  font-size:16px;
-  display:flex;
-  align-items:center;
-  gap:10px;
-  border-bottom:1px solid rgba(255,255,255,.06)
+.col h3 {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  margin-bottom: 10px;
 }
 
-.lane h2 .dot{
-  width:10px;
-  height:10px;
-  border-radius:50%
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
 }
 
-.levels{
-  display:grid;
-  grid-template-columns:repeat(4, 1fr);
-  gap:10px;
-  padding:12px
+.chip {
+  background: var(--chip);
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1px solid transparent;
 }
 
-/* МОБИЛЬНАЯ АДАПТАЦИЯ */
-@media(max-width: 600px){
-  .levels{
-    grid-template-columns: 1fr;
-  }
-
-  header{
-    padding:14px 12px 8px;
-  }
-
-  h1{
-    font-size:18px;
-  }
-
-  .legend .item{
-    font-size:11px;
-    padding:6px 8px;
-  }
-
-  .chip{
-    padding:10px 12px;
-    font-size:14px;
-  }
+.chip:hover {
+  background: var(--chip-hover);
+  border-color: rgba(255,255,255,0.1);
+  transform: translateY(-1px);
 }
 
-.col{
-  background:rgba(255,255,255,.02);
-  border:1px solid rgba(255,255,255,.05);
-  border-radius:12px;
-  padding:10px;
-  display:flex;
-  flex-direction:column;
-  min-height:160px
+dialog {
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 24px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
 }
 
-.col h3{
-  margin:2px 2px 8px;
-  font-size:12px;
-  color:var(--muted);
-  font-weight:600;
-  text-transform:uppercase;
-  letter-spacing:.6px
+dialog::backdrop {
+  background: rgba(0,0,0,0.8);
+  backdrop-filter: blur(4px);
 }
 
-.chips{display:flex;flex-wrap:wrap;gap:8px}
-
-.chip{
-  background:var(--chip);
-  border:1px solid rgba(255,255,255,.06);
-  color:var(--text);
-  padding:7px 9px;
-  border-radius:999px;
-  font-size:13px;
-  cursor:pointer;
-  transition:.15s ease;
+.dlg-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
 }
 
-.chip:hover{
-  background:var(--chip-hover);
-  transform:translateY(-1px)
+#dlg-title { margin: 0; font-size: 24px; }
+
+.close-btn {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 24px;
+  cursor: pointer;
 }
 
-.footer{
-  color:var(--muted);
-  font-size:12px;
-  margin-top:18px;
-  line-height:1.55
+.dlg-body p {
+  color: var(--muted);
+  line-height: 1.6;
 }
 
-.count{color:var(--accent);font-weight:600}
-
-dialog{
-  width:min(680px, calc(100% - 32px));
-  max-height:90vh;
-  overflow:auto;
-  border:1px solid rgba(255,255,255,.2);
-  border-radius:14px;
-  padding:0;
-  background:#0c1430;
-  color:var(--text);
-  box-shadow:0 20px 60px rgba(0,0,0,.5)
+.question-box {
+  background: rgba(155, 219, 255, 0.1);
+  padding: 12px;
+  border-radius: 10px;
+  margin-top: 15px;
+  border-left: 3px solid var(--accent);
 }
 
-dialog::backdrop{
-  background:rgba(3,6,16,.6);
-  backdrop-filter: blur(2px)
-}
-
-.md{padding:16px}
-
-.md h4{margin:0 0 6px;font-size:16px}
-
-.md p{margin:0 0 8px;color:#c7d0ea;font-size:14px}
-
-.badge{
-  display:inline-flex;
-  gap:6px;
-  align-items:center;
-  background:#0f1a3e;
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:999px;
-  padding:6px 10px;
-  font-size:12px;
-  margin:4px 6px 0 0
-}
-
-.xbtn{
-  background:none;
-  border:none;
-  color:#aeb9d9;
-  font-size:13px;
-  cursor:pointer;
-  padding:10px 12px
-}
-
-.head{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  border-bottom:1px solid rgba(255,255,255,.08);
-  padding:10px 12px
-}
-
-.empty{
-  color:var(--muted);
-  text-align:center;
-  padding:18px 6px
+.badge {
+  display: inline-block;
+  padding: 4px 8px;
+  background: var(--pill);
+  border-radius: 6px;
+  font-size: 11px;
+  margin-right: 5px;
+  margin-top: 10px;
 }
 </style>
 </head>
 <body>
 
 <header>
-<h1>Карта эмоций — 140 уникальных состояний</h1>
-<div class="sub">6 базовых эмоций × 4 уровня интенсивности.</div>
-<div class="sub">Создано по мотивам МАК "Неслучайные эмоции" и книги Н.Кедровой "Азбука эмоций".</div>
-<div class="controls">
-<input id="q" type="search" placeholder="Поиск эмоции">
-<select id="f-base">
-<option value="">Все базовые</option>
-<option value="Радость">Радость</option>
-<option value="Грусть">Грусть</option>
-<option value="Страх">Страх</option>
-<option value="Гнев">Гнев</option>
-<option value="Отвращение">Отвращение</option>
-<option value="Удивление">Удивление</option>
-</select>
-<select id="f-level">
-<option value="">Все уровни</option>
-<option value="Низкая">Низкая</option>
-<option value="Средняя">Средняя</option>
-<option value="Высокая">Высокая</option>
-<option value="Пиковая">Пиковая</option>
-</select>
-</div>
+  <div class="container-narrow">
+    <h1>Карта эмоций</h1>
+    
+    <div class="intro-text">
+      <p>Чтобы лучше понимать свои эмоции и осознанно жить жизнь, пользуйтесь полной картой эмоций ниже. Выбирайте удобный для вас способ осознавать эмоции:</p>
+      <ul>
+        <li>через поиск конкретной эмоции</li>
+        <li>через фильтры базовых эмоций</li>
+        <li>через фильтры уровня интенсивности</li>
+      </ul>
+      <p style="margin-top:8px; font-style: italic;">Можете воспользоваться вопросом внутри карточки для более точного понимания и осознания эмоции.</p>
+    </div>
+
+    <div class="controls">
+      <input type="text" id="q" placeholder="Поиск эмоции...">
+      <select id="f-base">
+        <option value="">Все базовые эмоции</option>
+        <option value="Радость">Радость</option>
+        <option value="Грусть">Грусть</option>
+        <option value="Страх">Страх</option>
+        <option value="Гнев">Гнев</option>
+        <option value="Отвращение">Отвращение</option>
+        <option value="Удивление">Удивление</option>
+      </select>
+      <select id="f-level">
+        <option value="">Любая интенсивность эмоций</option>
+        <option value="Низкая">Низкая</option>
+        <option value="Средняя">Средняя</option>
+        <option value="Высокая">Высокая</option>
+        <option value="Пиковая">Пиковая</option>
+      </select>
+    </div>
+    
+    <div class="stats">
+      <span>Всего: <b id="total">0</b></span>
+      <span>Найдено: <b id="shown">0</b></span>
+    </div>
+  </div>
 </header>
 
-<main class="main">
-<div id="grid" class="grid"></div>
-<div class="footer">
-Всего эмоций: <span id="total" class="count">0</span>. 
-Отфильтровано: <span id="shown" class="count">0</span>.
+<div class="main">
+  <div id="grid"></div>
 </div>
-</main>
 
 <dialog id="dlg">
-<div class="head">
-<h3 id="dlg-title">Эмоция</h3>
-<button class="xbtn" onclick="dlg.close()">Закрыть ✕</button>
-</div>
-<div class="md">
-<h4 id="dlg-desc"></h4>
-<p id="dlg-question"></p>
-<div id="dlg-tags"></div>
-</div>
+  <div class="dlg-head">
+    <h2 id="dlg-title"></h2>
+    <button class="close-btn" onclick="dlg.close()">&times;</button>
+  </div>
+  <div class="dlg-body">
+    <div id="dlg-tags"></div>
+    <p id="dlg-desc" style="margin-top: 15px;"></p>
+    <div class="question-box">
+      <small style="color:var(--accent); display:block; margin-bottom:4px;">Вопрос для осознания:</small>
+      <div id="dlg-question"></div>
+    </div>
+  </div>
 </dialog>
 
 <script>
@@ -461,8 +433,7 @@ const dataRaw = [
 ["Восхищение","Удивление","Высокая","Положительное удивление и уважение.","Что здесь красиво и ценно для меня?"],
 ["Замешательство","Удивление","Средняя","Неведение, легкое удивление.","Что меня смущает?"]
 ];
-</script>
-<script>
+
 const bases = ["Радость","Грусть","Страх","Гнев","Отвращение","Удивление"];
 const levels = ["Низкая","Средняя","Высокая","Пиковая"];
 
@@ -539,8 +510,8 @@ function render(){
             dlgDesc.textContent = desc;
             dlgQuestion.textContent = question;
             dlgTags.innerHTML = `
-              <span class="badge">${base}</span>
-              <span class="badge">${level}</span>
+              <span class="badge" style="color:${colors[base]}">● ${base}</span>
+              <span class="badge">Интенсивность: ${level}</span>
             `;
             dlg.showModal();
           };
@@ -562,6 +533,11 @@ fBase.addEventListener("change", render);
 fLevel.addEventListener("change", render);
 
 render();
+
+// Закрытие диалога при клике вне его
+dlg.addEventListener('click', (e) => {
+  if (e.target === dlg) dlg.close();
+});
 </script>
 
 </body>
