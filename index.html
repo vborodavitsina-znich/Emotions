@@ -32,10 +32,7 @@ header{
   border-bottom:1px solid rgba(255,255,255,.06)
 }
 
-.container-narrow {
-  max-width: 1200px;
-  margin: 0 auto;
-}
+.container-narrow { max-width: 1200px; margin: 0 auto; }
 
 h1{margin:0 0 6px;font-size:22px; font-weight: 700; letter-spacing: -0.02em;}
 
@@ -46,17 +43,6 @@ h1{margin:0 0 6px;font-size:22px; font-weight: 700; letter-spacing: -0.02em;}
   margin: 12px 0 20px;
   border-left: 3px solid var(--accent);
   font-size: 14px;
-  color: var(--text);
-}
-
-.intro-text p {
-  margin: 0 0 8px;
-}
-
-.intro-text ul {
-  margin: 0 0 12px;
-  padding-left: 20px;
-  color: var(--muted);
 }
 
 .sources {
@@ -64,6 +50,7 @@ h1{margin:0 0 6px;font-size:22px; font-weight: 700; letter-spacing: -0.02em;}
   color: var(--muted);
   border-top: 1px solid rgba(255,255,255,0.05);
   padding-top: 8px;
+  margin-top: 10px;
   font-style: italic;
 }
 
@@ -71,45 +58,27 @@ h1{margin:0 0 6px;font-size:22px; font-weight: 700; letter-spacing: -0.02em;}
   display:grid;
   gap:8px;
   grid-template-columns:1fr;
-  margin-bottom: 10px;
-}
-
-@media(min-width:700px){
-  .controls{
-    grid-template-columns: 1.2fr .9fr .9fr
-  }
-}
-
-input,select{
-  background:var(--card);
-  border:1px solid rgba(255,255,255,.1);
-  color:var(--text);
-  padding:12px;
-  border-radius:10px;
-  font-size:16px;
-  width:100%;
-  transition: border-color 0.2s;
-}
-
-input:focus, select:focus {
-  outline: none;
-  border-color: var(--accent);
-}
-
-.main{max-width:1200px;margin:16px auto;padding:0 16px 32px}
-
-.stats {
-  font-size: 12px;
-  color: var(--muted);
   margin-bottom: 15px;
-  display: flex;
-  gap: 15px;
 }
 
-.lane {
-  margin-bottom: 30px;
-}
+@media(min-width:700px){ .controls{ grid-template-columns: 1.2fr .9fr .9fr } }
 
+input, select {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: var(--text);
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 15px;
+  outline: none;
+}
+input:focus { border-color: var(--accent); }
+
+.stats { font-size: 12px; color: var(--muted); margin-bottom: 20px; }
+
+.main{ max-width:1200px; margin:0 auto; padding:0 16px 40px; }
+
+.lane { margin-bottom: 35px; }
 .lane h2 {
   display: flex;
   align-items: center;
@@ -120,48 +89,34 @@ input:focus, select:focus {
   border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
-.dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  display: inline-block;
-}
+.dot { width: 12px; height: 12px; border-radius: 50%; }
 
 .levels {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
 }
 
 .col h3 {
-  font-size: 13px;
+  font-size: 11px;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
   color: var(--muted);
-  margin-bottom: 10px;
+  letter-spacing: 0.05em;
+  margin-bottom: 12px;
 }
 
-.chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
 
 .chip {
   background: var(--chip);
-  padding: 8px 12px;
+  padding: 7px 12px;
   border-radius: 8px;
-  font-size: 14px;
+  font-size: 13px;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: 0.2s;
   border: 1px solid transparent;
 }
-
-.chip:hover {
-  background: var(--chip-hover);
-  border-color: rgba(255,255,255,0.1);
-  transform: translateY(-1px);
-}
+.chip:hover { background: var(--chip-hover); border-color: rgba(255,255,255,0.15); }
 
 dialog {
   background: var(--card);
@@ -169,54 +124,27 @@ dialog {
   border: 1px solid rgba(255,255,255,0.1);
   border-radius: 20px;
   padding: 24px;
-  max-width: 400px;
+  max-width: 450px;
   width: 90%;
   box-shadow: 0 20px 50px rgba(0,0,0,0.5);
 }
-
-dialog::backdrop {
-  background: rgba(0,0,0,0.8);
-  backdrop-filter: blur(4px);
-}
-
-.dlg-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 16px;
-}
-
-#dlg-title { margin: 0; font-size: 24px; }
-
-.close-btn {
-  background: none;
-  border: none;
-  color: var(--muted);
-  font-size: 24px;
-  cursor: pointer;
-}
-
-.dlg-body p {
-  color: var(--muted);
-  line-height: 1.6;
-}
+dialog::backdrop { background: rgba(0,0,0,0.8); backdrop-filter: blur(4px); }
 
 .question-box {
-  background: rgba(155, 219, 255, 0.1);
-  padding: 12px;
-  border-radius: 10px;
-  margin-top: 15px;
+  background: rgba(155, 219, 255, 0.07);
+  padding: 15px;
+  border-radius: 12px;
+  margin-top: 20px;
   border-left: 3px solid var(--accent);
 }
 
 .badge {
   display: inline-block;
-  padding: 4px 8px;
+  padding: 4px 10px;
   background: var(--pill);
   border-radius: 6px;
   font-size: 11px;
-  margin-right: 5px;
-  margin-top: 10px;
+  margin-right: 6px;
 }
 </style>
 </head>
@@ -236,12 +164,12 @@ dialog::backdrop {
       <p style="margin-bottom: 12px;">Воспользуйтесь вопросом внутри карточки для более точного осознания состояния.</p>
       
       <div class="sources">
-        По мотивам МАК «Неслучайные эмоции» и книги Н. Кедровой «Азбука эмоций».
+        По мотивам МАК «Неслучайные эмоции», книги Н. Кедровой «Азбука эмоций».
       </div>
     </div>
 
     <div class="controls">
-      <input type="text" id="q" placeholder="Поиск эмоции...">
+      <input type="text" id="q" placeholder="Поиск по названию...">
       <select id="f-base">
         <option value="">Все базовые эмоции</option>
         <option value="Радость">Радость</option>
@@ -252,18 +180,14 @@ dialog::backdrop {
         <option value="Удивление">Удивление</option>
       </select>
       <select id="f-level">
-        <option value=""> Уровень интенсивности эмоций</option>
+        <option value="">Уровень интенсивности эмоций</option>
         <option value="Низкий">Низкий</option>
         <option value="Средний">Средний</option>
         <option value="Высокий">Высокий</option>
         <option value="Пиковый">Пиковый</option>
       </select>
     </div>
-    
-    <div class="stats">
-      <span>Всего: <b id="total">0</b></span>
-      <span>Найдено: <b id="shown">0</b></span>
-    </div>
+    <div class="stats">Показано: <span id="shown">0</span> из <span id="total">0</span> состояний</div>
   </div>
 </header>
 
@@ -272,17 +196,15 @@ dialog::backdrop {
 </div>
 
 <dialog id="dlg">
-  <div class="dlg-head">
-    <h2 id="dlg-title"></h2>
-    <button class="close-btn" onclick="dlg.close()">&times;</button>
+  <div style="display:flex; justify-content:space-between; align-items:start;">
+    <h2 id="dlg-title" style="margin:0; font-size: 24px;"></h2>
+    <button onclick="dlg.close()" style="background:none; border:none; color:var(--muted); cursor:pointer; font-size:24px;">&times;</button>
   </div>
-  <div class="dlg-body">
-    <div id="dlg-tags"></div>
-    <p id="dlg-desc" style="margin-top: 15px;"></p>
-    <div class="question-box">
-      <small style="color:var(--accent); display:block; margin-bottom:4px;">Вопрос для осознания:</small>
-      <div id="dlg-question"></div>
-    </div>
+  <div id="dlg-tags" style="margin: 12px 0"></div>
+  <p id="dlg-desc" style="color:var(--text); font-size: 15px; line-height: 1.6;"></p>
+  <div class="question-box">
+    <div style="color:var(--accent); font-weight: 600; font-size: 12px; text-transform: uppercase; margin-bottom: 8px;">Вопрос для рефлексии:</div>
+    <div id="dlg-question" style="font-style: italic;"></div>
   </div>
 </dialog>
 
@@ -448,15 +370,7 @@ const dataRaw = [
 
 const bases = ["Радость","Грусть","Страх","Гнев","Отвращение","Удивление"];
 const levels = ["Низкий","Средний","Высокий","Пиковый"];
-
-const colors = {
-  "Радость":"var(--joy)",
-  "Грусть":"var(--sad)",
-  "Страх":"var(--fear)",
-  "Гнев":"var(--anger)",
-  "Отвращение":"var(--disgust)",
-  "Удивление":"var(--surprise)"
-};
+const colors = {"Радость":"var(--joy)","Грусть":"var(--sad)","Страх":"var(--fear)","Гнев":"var(--anger)","Отвращение":"var(--disgust)","Удивление":"var(--surprise)"};
 
 const grid = document.getElementById("grid");
 const qInput = document.getElementById("q");
@@ -464,12 +378,7 @@ const fBase = document.getElementById("f-base");
 const fLevel = document.getElementById("f-level");
 const totalEl = document.getElementById("total");
 const shownEl = document.getElementById("shown");
-
 const dlg = document.getElementById("dlg");
-const dlgTitle = document.getElementById("dlg-title");
-const dlgDesc = document.getElementById("dlg-desc");
-const dlgQuestion = document.getElementById("dlg-question");
-const dlgTags = document.getElementById("dlg-tags");
 
 totalEl.textContent = dataRaw.length;
 
@@ -478,79 +387,59 @@ function render(){
   const baseFilter = fBase.value;
   const levelFilter = fLevel.value;
 
-  const filtered = dataRaw.filter(([name, base, level])=>{
-    return (!baseFilter || base===baseFilter)
-      && (!levelFilter || level===levelFilter)
-      && name.toLowerCase().includes(q);
+  const filtered = dataRaw.filter(([name, base, level]) => {
+    return (!baseFilter || base === baseFilter) &&
+           (!levelFilter || level === levelFilter) &&
+           (name.toLowerCase().includes(q));
   });
 
   shownEl.textContent = filtered.length;
   grid.innerHTML = "";
 
-  bases.forEach(base=>{
-    const baseItems = filtered.filter(e=>e[1]===base);
+  bases.forEach(base => {
+    const baseItems = filtered.filter(e => e[1] === base);
     if(!baseItems.length) return;
 
     const lane = document.createElement("div");
     lane.className = "lane";
-
-    lane.innerHTML = `
-      <h2>
-        <span class="dot" style="background:${colors[base]}"></span>
-        ${base}
-      </h2>
-      <div class="levels"></div>
-    `;
-
+    lane.innerHTML = `<h2><span class="dot" style="background:${colors[base]}"></span>${base}</h2><div class="levels"></div>`;
     const levelsWrap = lane.querySelector(".levels");
 
-    levels.forEach(level=>{
+    levels.forEach(level => {
+      const levelItems = baseItems.filter(e => e[2] === level);
+      if(!levelItems.length) return;
+
       const col = document.createElement("div");
       col.className = "col";
       col.innerHTML = `<h3>${level}</h3><div class="chips"></div>`;
       const chipsWrap = col.querySelector(".chips");
 
-      baseItems
-        .filter(e=>e[2]===level)
-        .forEach(([name, base, level, desc, question])=>{
-          const chip = document.createElement("div");
-          chip.className = "chip";
-          chip.textContent = name;
-
-          chip.onclick = ()=>{
-            dlgTitle.textContent = name;
-            dlgDesc.textContent = desc;
-            dlgQuestion.textContent = question;
-            dlgTags.innerHTML = `
-              <span class="badge" style="color:${colors[base]}">● ${base}</span>
-              <span class="badge">Интенсивность: ${level}</span>
-            `;
-            dlg.showModal();
-          };
-
-          chipsWrap.appendChild(chip);
-        });
-
-      if(chipsWrap.children.length){
-        levelsWrap.appendChild(col);
-      }
+      levelItems.forEach(([name, b, l, desc, ques]) => {
+        const chip = document.createElement("div");
+        chip.className = "chip";
+        chip.textContent = name;
+        chip.onclick = () => {
+          document.getElementById("dlg-title").textContent = name;
+          document.getElementById("dlg-desc").textContent = desc;
+          document.getElementById("dlg-question").textContent = ques;
+          document.getElementById("dlg-tags").innerHTML = `
+            <span class="badge" style="color:${colors[b]}">● ${b}</span>
+            <span class="badge">Интенсивность: ${l}</span>
+          `;
+          dlg.showModal();
+        };
+        chipsWrap.appendChild(chip);
+      });
+      levelsWrap.appendChild(col);
     });
-
     grid.appendChild(lane);
   });
 }
 
-qInput.addEventListener("input", render);
-fBase.addEventListener("change", render);
-fLevel.addEventListener("change", render);
-
+[qInput, fBase, fLevel].forEach(el => el.addEventListener("input", render));
 render();
 
-// Закрытие диалога при клике вне его
-dlg.addEventListener('click', (e) => {
-  if (e.target === dlg) dlg.close();
-});
+dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
 </script>
-
 </body>
 </html>
