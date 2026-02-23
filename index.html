@@ -54,9 +54,17 @@ h1{margin:0 0 6px;font-size:22px; font-weight: 700; letter-spacing: -0.02em;}
 }
 
 .intro-text ul {
-  margin: 0;
+  margin: 0 0 12px;
   padding-left: 20px;
   color: var(--muted);
+}
+
+.sources {
+  font-size: 12px;
+  color: var(--muted);
+  border-top: 1px solid rgba(255,255,255,0.05);
+  padding-top: 8px;
+  font-style: italic;
 }
 
 .controls{
@@ -219,13 +227,17 @@ dialog::backdrop {
     <h1>Карта эмоций</h1>
     
     <div class="intro-text">
-      <p>Чтобы лучше понимать свои эмоции и осознанно жить жизнь, пользуйтесь полной картой эмоций ниже. Выбирайте удобный для вас способ осознавать эмоции:</p>
+      <p>Чтобы лучше понимать свои эмоции и осознанно жить жизнь, пользуйтесь полной картой эмоций ниже. Выбирайте удобный для вас способ:</p>
       <ul>
         <li>через поиск конкретной эмоции</li>
         <li>через фильтры базовых эмоций</li>
         <li>через фильтры уровня интенсивности</li>
       </ul>
-      <p style="margin-top:8px; font-style: italic;">Можете воспользоваться вопросом внутри карточки для более точного понимания и осознания эмоции.</p>
+      <p style="margin-bottom: 12px;">Воспользуйтесь вопросом внутри карточки для более точного осознания состояния.</p>
+      
+      <div class="sources">
+        Источники: по мотивам МАК «Неслучайные эмоции», книга Н. Кедровой «Азбука эмоций».
+      </div>
     </div>
 
     <div class="controls">
@@ -240,11 +252,11 @@ dialog::backdrop {
         <option value="Удивление">Удивление</option>
       </select>
       <select id="f-level">
-        <option value="">Любая интенсивность эмоций</option>
-        <option value="Низкая">Низкая</option>
-        <option value="Средняя">Средняя</option>
-        <option value="Высокая">Высокая</option>
-        <option value="Пиковая">Пиковая</option>
+        <option value=""> Уровень интенсивности эмоций</option>
+        <option value="Низкая">Низкий</option>
+        <option value="Средняя">Средний</option>
+        <option value="Высокая">Высокий</option>
+        <option value="Пиковая">Пиковый</option>
       </select>
     </div>
     
