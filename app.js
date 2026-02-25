@@ -1,13 +1,6 @@
 import { dataRaw } from './data.js';
 import { bases, levels, colors } from './constants.js';
-
-const grid = document.getElementById('grid');
-const qInput = document.getElementById('q');
-const fBase = document.getElementById('f-base');
-const fLevel = document.getElementById('f-level');
-const totalEl = document.getElementById('total');
-const shownEl = document.getElementById('shown');
-const dlg = document.getElementById('dlg');
+import { grid, qInput, fBase, fLevel, totalEl, shownEl, dlg } from './dom.js';
 
 totalEl.textContent = dataRaw.length;
 
