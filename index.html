@@ -21,7 +21,7 @@
             <li>через фильтры базовых эмоций</li>
             <li>через фильтры уровня интенсивности</li>
           </ul>
-          <p style="margin-top: 8px; font-style: italic">
+          <p class="intro-note">
             Можете воспользоваться вопросом внутри карточки для более точного
             понимания и осознания эмоции.
           </p>
@@ -60,43 +60,19 @@
     <div class="main">
       <div id="grid"></div>
     </div>
-
     <dialog id="dlg">
-      <div
-        style="
-          display: flex;
-          justify-content: space-between;
-          align-items: start;
-        ">
-        <h2 id="dlg-title" style="margin: 0; font-size: 24px"></h2>
-        <button
-          onclick="dlg.close()"
-          style="
-            background: none;
-            border: none;
-            color: var(--muted);
-            cursor: pointer;
-            font-size: 24px;
-          ">
-          &times;
-        </button>
+      <div class="dialog-header">
+        <h2 id="dlg-title" class="dialog-title"></h2>
+        <button onclick="dlg.close()" class="dialog-close">&times;</button>
       </div>
-      <div id="dlg-tags" style="margin: 12px 0"></div>
-      <p
-        id="dlg-desc"
-        style="color: var(--text); font-size: 15px; line-height: 1.6"></p>
+
+      <div id="dlg-tags" class="dialog-tags"></div>
+
+      <p id="dlg-desc" class="dialog-desc"></p>
+
       <div class="question-box">
-        <div
-          style="
-            color: var(--accent);
-            font-weight: 600;
-            font-size: 12px;
-            text-transform: uppercase;
-            margin-bottom: 8px;
-          ">
-          Вопрос для рефлексии:
-        </div>
-        <div id="dlg-question" style="font-style: italic"></div>
+        <div class="question-label">Вопрос для рефлексии:</div>
+        <div id="dlg-question" class="dialog-question"></div>
       </div>
     </dialog>
 

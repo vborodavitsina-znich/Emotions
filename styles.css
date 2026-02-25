@@ -200,3 +200,49 @@ dialog::backdrop {
   font-size: 11px;
   margin-right: 6px;
 }
+
+.intro-note {
+  margin-top: 8px;
+  font-style: italic;
+}
+
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+}
+
+.dialog-title {
+  margin: 0;
+  font-size: 24px;
+}
+
+.dialog-close {
+  background: none;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 24px;
+}
+
+.dialog-tags {
+  margin: 12px 0;
+}
+
+.dialog-desc {
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.question-label {
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.dialog-question {
+  font-style: italic;
+}
