@@ -1,16 +1,5 @@
 import { dataRaw } from './data.js';
-// --- Массив из 140 эмоций (название, базовая, уровень, описание, вопрос) ---
-
-const bases = ['Радость', 'Грусть', 'Страх', 'Гнев', 'Отвращение', 'Удивление'];
-const levels = ['Низкая', 'Средняя', 'Высокая', 'Пиковая'];
-const colors = {
-  Радость: 'var(--joy)',
-  Грусть: 'var(--sad)',
-  Страх: 'var(--fear)',
-  Гнев: 'var(--anger)',
-  Отвращение: 'var(--disgust)',
-  Удивление: 'var(--surprise)',
-};
+import { bases, levels, colors } from './constants.js';
 
 const grid = document.getElementById('grid');
 const qInput = document.getElementById('q');
