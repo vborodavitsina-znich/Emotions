@@ -1,6 +1,7 @@
 import { dataRaw } from './data.js';
 import { bases, levels, colors } from './constants.js';
-import { grid, qInput, fBase, fLevel, totalEl, shownEl, dlg } from './dom.js';
+import { grid, qInput, fBase, fLevel, totalEl, shownEl } from './dom.js';
+import { openEmotionDialog, initDialog } from './dialog.js';
 
 totalEl.textContent = dataRaw.length;
 
@@ -43,14 +44,13 @@ function render() {
         chip.className = 'chip';
         chip.textContent = name;
         chip.onclick = () => {
-          document.getElementById('dlg-title').textContent = name;
-          document.getElementById('dlg-desc').textContent = desc;
-          document.getElementById('dlg-question').textContent = ques;
-          document.getElementById('dlg-tags').innerHTML = `
-            <span class="badge" style="color:${colors[b]}">● ${b}</span>
-            <span class="badge">Интенсивность: ${l}</span>
-          `;
-          dlg.showModal();
+          openEmotionDialog({
+            name,
+            base: b,
+            level: l,
+            desc,
+            question: ques,
+          });
         };
         chipsWrap.appendChild(chip);
       });
@@ -63,6 +63,4 @@ function render() {
 [qInput, fBase, fLevel].forEach((el) => el.addEventListener('input', render));
 render();
 
-dlg.addEventListener('click', (e) => {
-  if (e.target === dlg) dlg.close();
-});
+initDialog();
