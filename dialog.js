@@ -1,10 +1,5 @@
-import { dlg } from './dom.js';
+import { dlg, dlgTitleEl, dlgTagsEl, dlgDescEl, dlgQuestionEl } from './dom.js';
 import { colors } from './constants.js';
-
-const dlgTitleEl = document.getElementById('dlg-title');
-const dlgTagsEl = document.getElementById('dlg-tags');
-const dlgDescEl = document.getElementById('dlg-desc');
-const dlgQuestionEl = document.getElementById('dlg-question');
 
 export function openEmotionDialog({ name, base, level, desc, question }) {
   dlgTitleEl.textContent = name;
