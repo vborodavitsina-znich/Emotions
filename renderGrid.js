@@ -44,10 +44,12 @@ export function renderGrid({
       const chipsWrap = col.querySelector('.chips');
 
       levelItems.forEach(([name, b, l, desc, ques]) => {
-        const chip = document.createElement('div');
+        const chip = document.createElement('button');
+        chip.type = 'button';
         chip.className = 'chip';
         chip.textContent = name;
-        chip.onclick = () => {
+
+        chip.addEventListener('click', () => {
           openEmotionDialog({
             name,
             base: b,
@@ -55,7 +57,7 @@ export function renderGrid({
             desc,
             question: ques,
           });
-        };
+        });
         chipsWrap.appendChild(chip);
       });
 

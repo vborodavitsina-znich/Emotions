@@ -4,12 +4,25 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Карта эмоций — 140 уникальных состояний</title>
+
+    <meta
+      name="description"
+      content="Интерактивная карта эмоций: поиск, фильтры по базовым эмоциям и уровням интенсивности, описание состояний и вопросы для рефлексии." />
+    <link
+      rel="canonical"
+      href="https://vborodavitsina-znich.github.io/Emotions/" />
+
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <header>
+    <header class="page-header">
       <div class="container-narrow">
         <h1>Карта эмоций</h1>
+      </div>
+    </header>
+
+    <section class="intro-section" aria-label="Описание и инструкция">
+      <div class="container-narrow">
         <div class="intro-text">
           <p>
             Чтобы лучше понимать свои эмоции и осознанно жить жизнь, пользуйтесь
@@ -25,14 +38,25 @@
             Можете воспользоваться вопросом внутри карточки для более точного
             понимания и осознания эмоции.
           </p>
-          <div class="sources">
+          <p class="sources">
             По мотивам МАК «Неслучайные эмоции», книги Н. Кедровой «Азбука
             эмоций».
-          </div>
+          </p>
         </div>
+      </div>
+    </section>
 
+    <section class="filters-bar" aria-label="Поиск и фильтры">
+      <div class="container-narrow">
         <div class="controls">
+          <label class="visually-hidden" for="q"
+            >Поиск по названию эмоции</label
+          >
           <input type="text" id="q" placeholder="Поиск по названию..." />
+
+          <label class="visually-hidden" for="f-base"
+            >Фильтр по базовой эмоции</label
+          >
           <select id="f-base">
             <option value="">Все базовые эмоции</option>
             <option value="Радость">Радость</option>
@@ -42,6 +66,10 @@
             <option value="Отвращение">Отвращение</option>
             <option value="Удивление">Удивление</option>
           </select>
+
+          <label class="visually-hidden" for="f-level"
+            >Фильтр по интенсивности</label
+          >
           <select id="f-level">
             <option value="">Интенсивность эмоций</option>
             <option value="Низкая">Низкая</option>
@@ -50,20 +78,26 @@
             <option value="Пиковая">Пиковая</option>
           </select>
         </div>
-        <div class="stats">
+
+        <div class="stats" aria-live="polite">
           Показано: <span id="shown">0</span> из
           <span id="total">0</span> состояний
         </div>
       </div>
-    </header>
+    </section>
 
-    <div class="main">
+    <main class="main">
       <div id="grid"></div>
-    </div>
-    <dialog id="dlg">
+    </main>
+
+    <dialog id="dlg" aria-labelledby="dlg-title" aria-describedby="dlg-desc">
       <div class="dialog-header">
         <h2 id="dlg-title" class="dialog-title"></h2>
-        <button id="dlg-close" type="button" class="dialog-close">
+        <button
+          id="dlg-close"
+          type="button"
+          class="dialog-close"
+          aria-label="Закрыть окно">
           &times;
         </button>
       </div>
