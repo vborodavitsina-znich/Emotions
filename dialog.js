@@ -1,4 +1,11 @@
-import { dlg, dlgTitleEl, dlgTagsEl, dlgDescEl, dlgQuestionEl } from './dom.js';
+import {
+  dlg,
+  dlgCloseBtn,
+  dlgTitleEl,
+  dlgTagsEl,
+  dlgDescEl,
+  dlgQuestionEl,
+} from './dom.js';
 import { colors } from './constants.js';
 
 export function openEmotionDialog({ name, base, level, desc, question }) {
@@ -15,6 +22,10 @@ export function openEmotionDialog({ name, base, level, desc, question }) {
 }
 
 export function initDialog() {
+  dlgCloseBtn.addEventListener('click', () => {
+    dlg.close();
+  });
+
   dlg.addEventListener('click', (e) => {
     if (e.target === dlg) dlg.close();
   });

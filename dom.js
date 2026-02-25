@@ -6,6 +6,7 @@ export const totalEl = document.getElementById('total');
 export const shownEl = document.getElementById('shown');
 
 export const dlg = document.getElementById('dlg');
+export const dlgCloseBtn = document.getElementById('dlg-close');
 export const dlgTitleEl = document.getElementById('dlg-title');
 export const dlgTagsEl = document.getElementById('dlg-tags');
 export const dlgDescEl = document.getElementById('dlg-desc');
